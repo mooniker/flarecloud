@@ -1,4 +1,4 @@
-# Script to Update Dynamic DNS with CloudFlair
+# Script to Update Dynamic DNS with CloudFlare
 
 ```sh
 ./ddns.sh update cloudflare \

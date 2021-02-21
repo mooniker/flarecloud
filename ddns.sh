@@ -211,27 +211,6 @@ fi
 
 verbalize Time to live set to $TTL seconds.
 
-look_up_my_ip () {
-    verbalize Looking up my IP address...
-    # Install `dig` via `dnsutils` for  IP lookup.
-    command -v dig >/dev/null 2>&1 || { echo >&2 "Please install `dig` via `dnsutils` for IP lookup."; exit 1; }
-    command -v dig &> /dev/null && {
-        verbalize ...and using OpenDNS...
-        MY_IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
-    } || {
-        verbalize ...and using Google...
-        MY_IP=$(dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | grep --only-matching --no-filename --extended-regex $IPV4_REGEX_PATTERN)
-    } || {
-        verbalize ...and using ipify.org...
-        MY_IP=$(curl --silent https://api.ipify.org)
-    } || {
-        echo "Could not get current IP."
-        exit 1
-    }
-    # GOOGLE_IPV6=`dig -6 TXT +short o-o.myaddr.l.google.com @ns1.google.com`
-    verbalize ...and it is $MY_IP.
-}
-
 if [ -z "${MY_IP+xxx}" ]; then
     look_up_my_ip
 fi
